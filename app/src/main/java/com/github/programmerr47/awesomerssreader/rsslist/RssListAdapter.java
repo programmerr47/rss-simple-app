@@ -1,0 +1,65 @@
+package com.github.programmerr47.awesomerssreader.rsslist;
+
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.github.programmerr47.awesomerssreader.R;
+import com.github.programmerr47.awesomerssreader.model.LentaNewsItem;
+import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
+import com.squareup.picasso.RequestCreator;
+
+import java.util.Collections;
+import java.util.List;
+
+import static com.github.programmerr47.awesomerssreader.util.PicassoUtil.picasso;
+
+public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
+    private List<LentaNewsItem> lentaNews = Collections.emptyList();
+
+    @Override
+    public RssItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        return new RssItemHolder(inflater.inflate(R.layout.item_news, null));
+    }
+
+    @Override
+    public void onBindViewHolder(RssItemHolder holder, int position) {
+        LentaNewsItem item = lentaNews.get(position);
+
+        RequestCreator requestCreator;
+        if (item.getEnclosure() != null && item.getEnclosure().getUrl() != null) {
+            requestCreator = picasso()
+                    .load(item.getEnclosure().getUrl())
+                    .placeholder(R.drawable.news_placeholder)
+                    .error(R.drawable.news_placeholder);
+        } else {
+            requestCreator = picasso().load(R.drawable.news_placeholder);
+        }
+        requestCreator.into(holder.image);
+
+        holder.title.setText(item.getTitle());
+    }
+
+    @Override
+    public int getItemCount() {
+        return lentaNews.size();
+    }
+
+    public void updateItems(List<LentaNewsItem> newNews) {
+        this.lentaNews = newNews;
+        notifyDataSetChanged();
+    }
+
+    static final class RssItemHolder extends BindRecyclerHolder {
+        private final ImageView image = bind(R.id.image);
+        private final TextView title = bind(R.id.title);
+
+        public RssItemHolder(View itemView) {
+            super(itemView);
+        }
+    }
+}
