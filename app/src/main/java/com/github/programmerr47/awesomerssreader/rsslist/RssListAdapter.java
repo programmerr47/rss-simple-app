@@ -1,5 +1,6 @@
 package com.github.programmerr47.awesomerssreader.rsslist;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,15 @@ import android.widget.TextView;
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
+import com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.Collections;
 import java.util.List;
 
-import static com.github.programmerr47.awesomerssreader.util.PicassoUtil.picasso;
+import static com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder.circlePlaceholder;
+import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTransformation.circleTransformation;
+import static com.github.programmerr47.awesomerssreader.util.picasso.PicassoUtil.picasso;
 
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
     private List<LentaNewsItem> lentaNews = Collections.emptyList();
@@ -32,14 +36,17 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
 
         RequestCreator requestCreator;
         if (item.getEnclosure() != null && item.getEnclosure().getUrl() != null) {
+            Drawable circleNewsPlaceholder = circlePlaceholder().get(holder.itemView.getContext(), R.drawable.news_placeholder);
             requestCreator = picasso()
                     .load(item.getEnclosure().getUrl())
-                    .placeholder(R.drawable.news_placeholder)
-                    .error(R.drawable.news_placeholder);
+                    .placeholder(circleNewsPlaceholder)
+                    .error(circleNewsPlaceholder);
         } else {
             requestCreator = picasso().load(R.drawable.news_placeholder);
         }
-        requestCreator.into(holder.image);
+        requestCreator
+                .transform(circleTransformation())
+                .into(holder.image);
 
         holder.title.setText(item.getTitle());
     }

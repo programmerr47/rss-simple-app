@@ -1,4 +1,4 @@
-package com.github.programmerr47.awesomerssreader.util;
+package com.github.programmerr47.awesomerssreader.util.picasso;
 
 import com.squareup.picasso.Picasso;
 
