@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -9,20 +9,19 @@
         android:id="@+id/image"
         android:layout_width="@dimen/item_news_image_size"
         android:layout_height="@dimen/item_news_image_size"
-        android:padding="@dimen/margin_medium"
-        android:src="@mipmap/ic_launcher"
+        android:layout_margin="@dimen/margin_medium"
+        android:src="@drawable/news_placeholder"
         android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_news_image_size"
-        android:layout_marginStart="@dimen/item_news_image_size"
         android:layout_marginRight="@dimen/margin_medium"
         android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_toRightOf="@id/image"
         android:textColor="#000"
         android:textSize="17sp"
         android:text="Test title of news"/>
 
-</FrameLayout>
+</RelativeLayout>
