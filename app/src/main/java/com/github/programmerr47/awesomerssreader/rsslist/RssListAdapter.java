@@ -11,12 +11,12 @@ import android.widget.TextView;
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
-import com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.Collections;
 import java.util.List;
 
+import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder.circlePlaceholder;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTransformation.circleTransformation;
 import static com.github.programmerr47.awesomerssreader.util.picasso.PicassoUtil.picasso;
@@ -44,8 +44,11 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
         } else {
             requestCreator = picasso().load(R.drawable.news_placeholder);
         }
+        int imageSize = holder.getImageSize();
         requestCreator
+                .resize(imageSize, imageSize)
                 .transform(circleTransformation())
+                .centerCrop()
                 .into(holder.image);
 
         holder.title.setText(item.getTitle());
@@ -67,6 +70,10 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
 
         public RssItemHolder(View itemView) {
             super(itemView);
+        }
+
+        public int getImageSize() {
+            return (int) dimen(itemView.getContext(), R.dimen.item_news_image_size);
         }
     }
 }
