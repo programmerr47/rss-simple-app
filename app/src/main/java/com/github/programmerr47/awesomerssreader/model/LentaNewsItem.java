@@ -47,5 +47,17 @@ public final class LentaNewsItem {
         @Attribute private String url;
         @Attribute private int length;
         @Attribute private String type;
+
+        public String getUrl() {
+            return url;
+        }
+
+        public int getLength() {
+            return length;
+        }
+
+        public String getType() {
+            return type;
+        }
     }
 }
