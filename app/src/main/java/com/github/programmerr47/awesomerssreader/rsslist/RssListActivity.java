@@ -2,6 +2,7 @@ package com.github.programmerr47.awesomerssreader.rsslist;
 
 import android.support.design.widget.Snackbar;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,8 +34,10 @@ public class RssListActivity extends BindActivity {
     }
 
     private void prepareRecycler() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         listView = bind(R.id.list);
-        listView.setLayoutManager(new LinearLayoutManager(this));
+        listView.setLayoutManager(layoutManager);
+        listView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
         listView.setAdapter(adapter);
     }
 
