@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.LentaRss;
@@ -17,6 +18,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
@@ -25,6 +28,7 @@ import static io.reactivex.schedulers.Schedulers.io;
 public class RssListActivity extends BindActivity {
     private final RssListAdapter adapter = new RssListAdapter();
     private RecyclerView listView;
+    private ProgressBar progressView;
 
     private Disposable currentDisposable;
 
@@ -32,6 +36,7 @@ public class RssListActivity extends BindActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_rss_list);
+        progressView = bind(R.id.progress);
         prepareRecycler();
     }
 
@@ -65,6 +70,8 @@ public class RssListActivity extends BindActivity {
                     @Override
                     public void accept(LentaRss lentaRss) throws Exception {
                         adapter.updateItems(lentaRss.getItems());
+                        listView.setVisibility(VISIBLE);
+                        progressView.setVisibility(GONE);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
