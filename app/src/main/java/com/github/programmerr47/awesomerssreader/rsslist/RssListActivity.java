@@ -11,11 +11,13 @@ import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.LentaRss;
 import com.github.programmerr47.awesomerssreader.net.UrlRequest;
 import com.github.programmerr47.awesomerssreader.util.BindActivity;
+import com.github.programmerr47.awesomerssreader.util.recyclerdecorations.SpaceDecoration;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
+import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
@@ -38,6 +40,7 @@ public class RssListActivity extends BindActivity {
         listView = bind(R.id.list);
         listView.setLayoutManager(layoutManager);
         listView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+        listView.addItemDecoration(new SpaceDecoration((int) dimen(this, R.dimen.margin_big)));
         listView.setAdapter(adapter);
     }
 
