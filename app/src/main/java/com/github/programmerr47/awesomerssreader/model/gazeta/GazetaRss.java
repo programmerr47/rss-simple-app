@@ -12,6 +12,12 @@ public final class GazetaRss {
     @Path("channel")
     private List<GazetaNewsItem> items;
 
+    public GazetaRss(List<GazetaNewsItem> items) {
+        this.items = items;
+    }
+
+    public GazetaRss() {}
+
     public List<GazetaNewsItem> getItems() {
         return items;
     }
