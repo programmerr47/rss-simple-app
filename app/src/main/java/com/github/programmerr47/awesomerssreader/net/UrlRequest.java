@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.concurrent.Callable;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 public final class UrlRequest<R> {
@@ -15,8 +16,8 @@ public final class UrlRequest<R> {
         this.responseClass = responseClass;
     }
 
-    public Observable<R> makeObservable(final String url) {
-        return Observable.fromCallable(new Callable<R>() {
+    public Flowable<R> makeFlowable(final String url) {
+        return Flowable.fromCallable(new Callable<R>() {
             @Override
             public R call() throws Exception {
                 InputStream urlStream = new URL(url).openStream();

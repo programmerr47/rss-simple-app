@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.programmerr47.awesomerssreader.R;
-import com.github.programmerr47.awesomerssreader.model.LentaNewsItem;
+import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
 import com.squareup.picasso.RequestCreator;
 
