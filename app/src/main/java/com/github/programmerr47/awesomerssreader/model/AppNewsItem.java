@@ -1,5 +1,15 @@
 package com.github.programmerr47.awesomerssreader.model;
 
+import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaNewsItem;
+import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
+import com.github.programmerr47.awesomerssreader.util.DateFormatter;
+
+import java.util.Date;
+
+import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
+import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
+import static com.github.programmerr47.awesomerssreader.util.DateFormatter.toMs;
+
 public final class AppNewsItem {
     public enum Source {
         LENTA, GAZETA
@@ -11,7 +21,27 @@ public final class AppNewsItem {
     private final long date;
     private final String thumbUrl;
 
-    public AppNewsItem(Builder builder) {
+    public static AppNewsItem create(LentaNewsItem lentaNewsItem) {
+        return new AppNewsItem.Builder()
+                .title(lentaNewsItem.getTitle())
+                .description(lentaNewsItem.getDescription())
+                .source(LENTA)
+                .date(toMs(lentaNewsItem.getPubDate()))
+                .thumbUrl(lentaNewsItem.getEnclosure() != null ? lentaNewsItem.getEnclosure().getUrl() : null)
+                .build();
+    }
+
+    public static AppNewsItem create(GazetaNewsItem gazetaNewsItem) {
+        return new AppNewsItem.Builder()
+                .title(gazetaNewsItem.getTitle())
+                .description(gazetaNewsItem.getDescription())
+                .source(GAZETA)
+                .date(toMs(gazetaNewsItem.getPubDate()))
+                .thumbUrl(gazetaNewsItem.getEnclosure() != null ? gazetaNewsItem.getEnclosure().getUrl() : null)
+                .build();
+    }
+
+    private AppNewsItem(Builder builder) {
         this.title = builder.title;
         this.description = builder.description;
         this.source = builder.source;
@@ -71,7 +101,7 @@ public final class AppNewsItem {
             return this;
         }
 
-        public AppNewsItem createAppNewsItem() {
+        public AppNewsItem build() {
             return new AppNewsItem(this);
         }
     }

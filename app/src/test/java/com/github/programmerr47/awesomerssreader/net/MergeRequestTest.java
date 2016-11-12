@@ -1,5 +1,6 @@
 package com.github.programmerr47.awesomerssreader.net;
 
+import com.github.programmerr47.awesomerssreader.ObjectFactory;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
@@ -14,6 +15,10 @@ import java.util.List;
 import io.reactivex.Flowable;
 import io.reactivex.subscribers.TestSubscriber;
 
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaFlowable;
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaItem;
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaFlowable;
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaItem;
 import static java.util.Arrays.asList;
 
 /**
@@ -36,29 +41,5 @@ public class MergeRequestTest {
         TestSubscriber<List<AppNewsItem>> testSubscriber = new TestSubscriber<>();
         mergeResult.subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
-    }
-
-    private Flowable<LentaRss> lentaFlowable(LentaNewsItem... lentaNewsItems) {
-        return Flowable.fromArray(lentaRss(lentaNewsItems));
-    }
-
-    private Flowable<GazetaRss> gazetaFlowable(GazetaNewsItem... gazetaNewsItems) {
-        return Flowable.fromArray(gazetaRss(gazetaNewsItems));
-    }
-
-    private LentaRss lentaRss(LentaNewsItem... lentaNewsItems) {
-        return new LentaRss(asList(lentaNewsItems));
-    }
-
-    private GazetaRss gazetaRss(GazetaNewsItem... gazetaNewsItems) {
-        return new GazetaRss(asList(gazetaNewsItems));
-    }
-
-    private LentaNewsItem lentaItem(String title, String description, String pubDate, String thumbUrl) {
-        return new LentaNewsItem(null, title, null, description, pubDate, null, thumbUrl);
-    }
-
-    private GazetaNewsItem gazetaItem(String title, String pubDate, String description, String thumbUrl) {
-        return new GazetaNewsItem(title, null, null, pubDate, description, null, thumbUrl);
     }
 }

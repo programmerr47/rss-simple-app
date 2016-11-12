@@ -1,10 +1,9 @@
-package com.github.programmerr47.awesomerssreader;
+package com.github.programmerr47.awesomerssreader.net;
 
 import android.test.suitebuilder.annotation.LargeTest;
 
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
-import com.github.programmerr47.awesomerssreader.net.Requests;
 
 import org.junit.Test;
 
