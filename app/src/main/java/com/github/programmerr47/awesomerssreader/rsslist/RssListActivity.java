@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
+import com.github.programmerr47.awesomerssreader.net.Requests;
 import com.github.programmerr47.awesomerssreader.net.UrlRequest;
 import com.github.programmerr47.awesomerssreader.util.BindActivity;
 
@@ -54,8 +55,7 @@ public class RssListActivity extends BindActivity {
     }
 
     private void fetchRss() {
-        updateCurrentDisposable(new UrlRequest<>(LentaRss.class)
-                .makeFlowable("https://m.lenta.ru/rss")
+        updateCurrentDisposable(Requests.fetchLentaRss()
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(new Consumer<LentaRss>() {
