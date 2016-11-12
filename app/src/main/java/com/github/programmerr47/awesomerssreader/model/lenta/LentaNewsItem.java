@@ -1,4 +1,4 @@
-package com.github.programmerr47.awesomerssreader.model;
+package com.github.programmerr47.awesomerssreader.model.lenta;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
