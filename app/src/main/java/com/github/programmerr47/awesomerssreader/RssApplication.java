@@ -1,5 +1,6 @@
 package com.github.programmerr47.awesomerssreader;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
@@ -8,6 +9,7 @@ import android.content.Context;
  * @since 2016-11-07
  */
 public class RssApplication extends Application {
+    @SuppressLint("StaticFieldLeak")
     private static Context appContext;
 
     @Override

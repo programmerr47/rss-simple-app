@@ -12,6 +12,7 @@ import static android.graphics.Shader.TileMode.CLAMP;
 public enum CircleTransformation implements Transformation {
     INSTANCE;
 
+    @SuppressWarnings("SameReturnValue")
     public static Transformation circleTransformation() {
         return CircleTransformation.INSTANCE;
     }

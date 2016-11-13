@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
 
+@SuppressWarnings("WeakerAccess")
 public final class UrlRequest<R> {
     private final Class<R> responseClass;
 

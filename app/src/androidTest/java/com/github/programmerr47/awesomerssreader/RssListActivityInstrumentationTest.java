@@ -1,18 +1,12 @@
 package com.github.programmerr47.awesomerssreader;
 
 import android.support.annotation.IdRes;
-import android.support.test.espresso.Espresso;
-import android.support.test.espresso.PerformException;
-import android.support.test.espresso.assertion.ViewAssertions;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 
 import com.github.programmerr47.awesomerssreader.rsslist.RssListActivity;
 
 import junit.framework.AssertionFailedError;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
 import org.junit.Rule;
 import org.junit.Test;
 
