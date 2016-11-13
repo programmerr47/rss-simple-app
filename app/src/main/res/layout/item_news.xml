@@ -9,16 +9,18 @@
         android:id="@+id/image"
         android:layout_width="@dimen/item_news_image_size"
         android:layout_height="@dimen/item_news_image_size"
-        android:layout_margin="@dimen/margin_medium"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:src="@drawable/news_placeholder"
         android:scaleType="centerCrop"/>
 
+    <!-- android:layout_marginTop="-4dp" is a hack to reduce top extra spacing of textview -->
+    <!-- TODO need to try roboto font -->
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_small"
-        android:layout_marginRight="@dimen/margin_medium"
-        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginTop="-4dp"
         android:layout_toRightOf="@id/image"
         android:textColor="#000"
         android:textSize="17sp"

@@ -6,6 +6,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
@@ -13,6 +14,7 @@ import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 import com.github.programmerr47.awesomerssreader.net.Requests;
 import com.github.programmerr47.awesomerssreader.net.UrlRequest;
 import com.github.programmerr47.awesomerssreader.util.BindActivity;
+import com.github.programmerr47.awesomerssreader.util.recyclerdecorations.SpaceDecoration;
 
 import java.util.List;
 
@@ -20,6 +22,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
@@ -27,6 +32,7 @@ import static io.reactivex.schedulers.Schedulers.io;
 public class RssListActivity extends BindActivity {
     private final RssListAdapter adapter = new RssListAdapter();
     private RecyclerView listView;
+    private ProgressBar progressView;
 
     private Disposable currentDisposable;
 
@@ -34,6 +40,7 @@ public class RssListActivity extends BindActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_rss_list);
+        progressView = bind(R.id.progress);
         prepareRecycler();
     }
 
@@ -42,6 +49,7 @@ public class RssListActivity extends BindActivity {
         listView = bind(R.id.list);
         listView.setLayoutManager(layoutManager);
         listView.addItemDecoration(new DividerItemDecoration(this, layoutManager.getOrientation()));
+        listView.addItemDecoration(new SpaceDecoration((int) dimen(this, R.dimen.margin_big)));
         listView.setAdapter(adapter);
     }
 
@@ -65,6 +73,8 @@ public class RssListActivity extends BindActivity {
                     @Override
                     public void accept(List<AppNewsItem> appNewsItems) throws Exception {
                         adapter.updateItems(appNewsItems);
+                        listView.setVisibility(VISIBLE);
+                        progressView.setVisibility(GONE);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
