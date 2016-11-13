@@ -50,10 +50,10 @@ public class MergeRequestTest {
             @Override
             public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
                 return appNewsItems.size() == 4 &&
-                        checkAppNewsItem(appNewsItems.get(0), "Lenta Test1", "Test description lenta 1", LENTA, 1478938862000L, null) &&
-                        checkAppNewsItem(appNewsItems.get(1), "Gazeta Test1", "Test description gazeta 1", GAZETA, 1478942462000L, null) &&
-                        checkAppNewsItem(appNewsItems.get(2), "Lenta Test2", "Test description lenta 2", LENTA, 1478946062000L, null) &&
-                        checkAppNewsItem(appNewsItems.get(3), "Gazeta Test2", "Test description gazeta 2", GAZETA, 1478949662000L, null);
+                        checkAppNewsItem(appNewsItems.get(0), "Gazeta Test2", "Test description gazeta 2", GAZETA, 1478949662000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(1), "Lenta Test2", "Test description lenta 2", LENTA, 1478946062000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(2), "Gazeta Test1", "Test description gazeta 1", GAZETA, 1478942462000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(3), "Lenta Test1", "Test description lenta 1", LENTA, 1478938862000L, null);
             }
         });
     }

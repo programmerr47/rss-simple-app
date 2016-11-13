@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Awesome Rss Reader</string>
-    <string name="message.error">Oops! Something went wrong&#8230;</string>
-    <string name="action.retry">Retry</string>
+    <string name="message.error">Упс! Что-то пошло не так&#8230;</string>
+    <string name="action.retry">Повторить</string>
+    <string name="source.lenta">Лента.ru</string>
+    <string name="source.gazeta">Газета.ru</string>
 </resources>
