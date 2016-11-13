@@ -21,8 +21,8 @@ public class RssCheckTest {
 
         testObserver.assertNoErrors()
                 .assertValue(lentaRss -> lentaRss != null)
-                .assertValue(lentaRss -> lentaRss.getItems().size() > 0)
-                .assertValue(lentaRss -> isContentNotNull(lentaRss.getItems()));
+                .assertValue(lentaRss -> lentaRss.items().size() > 0)
+                .assertValue(lentaRss -> isContentNotNull(lentaRss.items()));
     }
 
     @Test
@@ -33,8 +33,8 @@ public class RssCheckTest {
 
         testObserver.assertNoErrors()
                 .assertValue(gazetaRss -> gazetaRss != null)
-                .assertValue(gazetaRss -> gazetaRss.getItems().size() > 0)
-                .assertValue(gazetaRss -> isContentNotNull(gazetaRss.getItems()));
+                .assertValue(gazetaRss -> gazetaRss.items().size() > 0)
+                .assertValue(gazetaRss -> isContentNotNull(gazetaRss.items()));
     }
 
     @Test

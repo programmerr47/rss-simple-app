@@ -36,10 +36,10 @@ public class ObjectFactory {
     }
 
     public static LentaNewsItem lentaItem(String title, String description, String pubDate, String thumbUrl) {
-        return new LentaNewsItem(null, title, null, description, pubDate, null, thumbUrl);
+        return new LentaNewsItem(null, title, null, description, pubDate, null, new LentaNewsItem.Enclosure(thumbUrl, 0, null));
     }
 
     public static GazetaNewsItem gazetaItem(String title, String pubDate, String description, String thumbUrl) {
-        return new GazetaNewsItem(title, null, null, pubDate, description, null, thumbUrl);
+        return new GazetaNewsItem(title, null, null, pubDate, description, null, new GazetaNewsItem.Enclosure(thumbUrl, null));
     }
 }

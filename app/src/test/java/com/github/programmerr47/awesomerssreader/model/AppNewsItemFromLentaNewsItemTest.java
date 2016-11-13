@@ -52,10 +52,10 @@ public class AppNewsItemFromLentaNewsItemTest {
     @Test
     public void checkConversionToAppNewsItem() {
         AppNewsItem item = AppNewsItem.create(lentaNewsItem);
-        Assert.assertEquals(item.getTitle(), lentaNewsItem.getTitle());
-        Assert.assertEquals(item.getDate(), expectedConvertedTime);
-        Assert.assertEquals(item.getDescription(), lentaNewsItem.getDescription());
-        Assert.assertEquals(item.getThumbUrl(), expectedUrl);
-        Assert.assertEquals(item.getSource(), LENTA);
+        Assert.assertEquals(item.title(), lentaNewsItem.title());
+        Assert.assertEquals(item.date(), expectedConvertedTime);
+        Assert.assertEquals(item.description(), lentaNewsItem.description());
+        Assert.assertEquals(item.thumbUrl(), expectedUrl);
+        Assert.assertEquals(item.source(), LENTA);
     }
 }
