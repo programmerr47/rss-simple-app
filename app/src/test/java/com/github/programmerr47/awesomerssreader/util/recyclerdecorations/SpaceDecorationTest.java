@@ -13,6 +13,8 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+import lombok.val;
+
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(RobolectricTestRunner.class)
@@ -24,7 +26,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void positiveEvenSpacingForExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(24);
+        val decoration = new SpaceDecoration(24);
         doReturn(1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect(12, 12, 12, 12));
@@ -33,7 +35,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void positiveEvenSpacingForNotExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(24);
+        val decoration = new SpaceDecoration(24);
         doReturn(-1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect());
@@ -42,7 +44,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void positiveOddSpacingForExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(25);
+        val decoration = new SpaceDecoration(25);
         doReturn(1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect(12, 12, 13, 13));
@@ -51,7 +53,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void positiveOddSpacingForNotExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(25);
+        val decoration = new SpaceDecoration(25);
         doReturn(-1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect());
@@ -60,7 +62,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void zeroSpacingForExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(0);
+        val decoration = new SpaceDecoration(0);
         doReturn(1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect());
@@ -69,7 +71,7 @@ public class SpaceDecorationTest {
     @Test
     @MediumTest
     public void zeroSpacingForNotExistingItem() {
-        SpaceDecoration decoration = new SpaceDecoration(0);
+        val decoration = new SpaceDecoration(0);
         doReturn(-1).when(spyRecycler).getChildAdapterPosition(null);
         decoration.getItemOffsets(rect, null, spyRecycler, null);
         Assert.assertEquals(rect, new Rect());

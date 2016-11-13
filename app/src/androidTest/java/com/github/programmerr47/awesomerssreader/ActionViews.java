@@ -11,17 +11,14 @@ import org.hamcrest.Matcher;
 
 import java.util.concurrent.TimeoutException;
 
+import lombok.experimental.UtilityClass;
+
 import static android.support.test.espresso.matcher.ViewMatchers.isRoot;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-08
- */
+@UtilityClass
 @SuppressWarnings("WeakerAccess")
 public class ActionViews {
-    private ActionViews() {}
-
     /**
      * Perform action of waiting for a specific view id.
      *

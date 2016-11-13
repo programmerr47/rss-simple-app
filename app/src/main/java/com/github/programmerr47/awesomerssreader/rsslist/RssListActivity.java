@@ -18,6 +18,7 @@ import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
+import static com.github.programmerr47.awesomerssreader.util.ObservableTransformers.listMap;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
@@ -59,6 +60,7 @@ public class RssListActivity extends BindActivity {
 
     private void fetchRss() {
         updateCurrentDisposable(Requests.fetchAllRss()
+                .compose(listMap(AppNewsAdapterItem::create))
                 .subscribeOn(io())
                 .observeOn(mainThread())
                 .subscribe(
@@ -69,7 +71,8 @@ public class RssListActivity extends BindActivity {
                         },
                         () -> {
                             listView.setVisibility(VISIBLE);
-                            progressView.setVisibility(GONE);}));
+                            progressView.setVisibility(GONE);
+                        }));
     }
 
     private void showErrorSnackbar() {

@@ -12,17 +12,16 @@ import android.widget.TextView;
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source;
-import com.github.programmerr47.awesomerssreader.util.AndroidUtils;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.Collections;
 import java.util.List;
 
-import lombok.AccessLevel;
-import lombok.experimental.ExtensionMethod;
 import lombok.experimental.FieldDefaults;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder.circlePlaceholder;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTransformation.circleTransformation;
@@ -31,7 +30,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @SuppressWarnings("WeakerAccess")
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
-    private List<AppNewsItem> lentaNews = Collections.emptyList();
+    private List<AppNewsAdapterItem> lentaNews = Collections.emptyList();
 
     @Override
     public RssItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -41,7 +40,8 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
 
     @Override
     public void onBindViewHolder(RssItemHolder holder, int position) {
-        AppNewsItem item = lentaNews.get(position);
+        AppNewsAdapterItem adapterItem = lentaNews.get(position);
+        AppNewsItem item = adapterItem.item();
 
         RequestCreator requestCreator;
         if (item.thumbUrl() != null) {
@@ -61,7 +61,13 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
                 .into(holder.image);
 
         holder.title.setText(item.title());
+        holder.description.setVisibility(adapterItem.isDescriptionShown() ? VISIBLE : GONE);
+        holder.description.setText(item.description());
         holder.setSource(item.source());
+        holder.itemView.setOnClickListener(view -> {
+            adapterItem.isDescriptionShown(!adapterItem.isDescriptionShown());
+            notifyItemChanged(position);
+        });
     }
 
     @Override
@@ -69,8 +75,7 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
         return lentaNews.size();
     }
 
-    @SuppressWarnings("WeakerAccess")
-    public void updateItems(List<AppNewsItem> newNews) {
+    public void updateItems(List<AppNewsAdapterItem> newNews) {
         this.lentaNews = newNews;
         notifyDataSetChanged();
     }
@@ -79,6 +84,7 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
     static final class RssItemHolder extends BindRecyclerHolder {
         ImageView image = bind(R.id.image);
         TextView title = bind(R.id.title);
+        TextView description = bind(R.id.description);
         TextView source = bind(R.id.source);
 
         public RssItemHolder(View itemView) {
