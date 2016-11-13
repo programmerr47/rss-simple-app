@@ -69,7 +69,7 @@ public class Requests {
                 .toSortedList(new Comparator<AppNewsItem>() {
                     @Override
                     public int compare(AppNewsItem item1, AppNewsItem item2) {
-                        long diff = item1.getDate() - item2.getDate();
+                        long diff = item2.getDate() - item1.getDate();
                         return diff < 0 ? -1 : diff == 0 ? 0 : 1;
                     }
                 })

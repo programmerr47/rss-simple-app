@@ -1,6 +1,7 @@
 package com.github.programmerr47.awesomerssreader.rsslist;
 
 import android.graphics.drawable.Drawable;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.programmerr47.awesomerssreader.R;
-import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
+import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
+import com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
 import com.squareup.picasso.RequestCreator;
 
@@ -22,23 +24,23 @@ import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTrans
 import static com.github.programmerr47.awesomerssreader.util.picasso.PicassoUtil.picasso;
 
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
-    private List<LentaNewsItem> lentaNews = Collections.emptyList();
+    private List<AppNewsItem> lentaNews = Collections.emptyList();
 
     @Override
     public RssItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new RssItemHolder(inflater.inflate(R.layout.item_news, null));
+        return new RssItemHolder(inflater.inflate(R.layout.item_news, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RssItemHolder holder, int position) {
-        LentaNewsItem item = lentaNews.get(position);
+        AppNewsItem item = lentaNews.get(position);
 
         RequestCreator requestCreator;
-        if (item.getEnclosure() != null && item.getEnclosure().getUrl() != null) {
+        if (item.getThumbUrl() != null) {
             Drawable circleNewsPlaceholder = circlePlaceholder().get(holder.itemView.getContext(), R.drawable.news_placeholder);
             requestCreator = picasso()
-                    .load(item.getEnclosure().getUrl())
+                    .load(item.getThumbUrl())
                     .placeholder(circleNewsPlaceholder)
                     .error(circleNewsPlaceholder);
         } else {
@@ -52,6 +54,7 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
                 .into(holder.image);
 
         holder.title.setText(item.getTitle());
+        holder.setSource(item.getSource());
     }
 
     @Override
@@ -59,7 +62,8 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
         return lentaNews.size();
     }
 
-    public void updateItems(List<LentaNewsItem> newNews) {
+    @SuppressWarnings("WeakerAccess")
+    public void updateItems(List<AppNewsItem> newNews) {
         this.lentaNews = newNews;
         notifyDataSetChanged();
     }
@@ -67,6 +71,7 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
     static final class RssItemHolder extends BindRecyclerHolder {
         private final ImageView image = bind(R.id.image);
         private final TextView title = bind(R.id.title);
+        private final TextView source = bind(R.id.source);
 
         public RssItemHolder(View itemView) {
             super(itemView);
@@ -74,6 +79,22 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
 
         public int getImageSize() {
             return (int) dimen(itemView.getContext(), R.dimen.item_news_image_size);
+        }
+
+        public void setSource(Source source) {
+            this.source.setText(userFriendlySource(source));
+        }
+
+        @StringRes
+        private int userFriendlySource(Source source) {
+            switch (source) {
+                case LENTA:
+                    return R.string.source_lenta;
+                case GAZETA:
+                    return R.string.source_gazeta;
+                default:
+                    throw new IllegalArgumentException("There is no user frendly form for source: " + source);
+            }
         }
     }
 }
