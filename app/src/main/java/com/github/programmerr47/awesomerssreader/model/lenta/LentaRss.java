@@ -12,6 +12,12 @@ public final class LentaRss {
     @Path("channel")
     private List<LentaNewsItem> items;
 
+    public LentaRss(List<LentaNewsItem> items) {
+        this.items = items;
+    }
+
+    public LentaRss() {}
+
     public List<LentaNewsItem> getItems() {
         return items;
     }

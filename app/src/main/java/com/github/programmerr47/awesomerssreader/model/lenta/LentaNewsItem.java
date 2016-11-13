@@ -14,6 +14,18 @@ public final class LentaNewsItem {
     @Element private String category;
     @Element(required = false) private Enclosure enclosure;
 
+    public LentaNewsItem(String guid, String title, String link, String description, String pubDate, String category, String thumbUrl) {
+        this.guid = guid;
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.pubDate = pubDate;
+        this.category = category;
+        this.enclosure = new Enclosure(thumbUrl, 0, null);
+    }
+
+    public LentaNewsItem() {}
+
     public String getGuid() {
         return guid;
     }
@@ -47,6 +59,14 @@ public final class LentaNewsItem {
         @Attribute private String url;
         @Attribute private int length;
         @Attribute private String type;
+
+        public Enclosure(String url, int length, String type) {
+            this.url = url;
+            this.length = length;
+            this.type = type;
+        }
+
+        public Enclosure() {}
 
         public String getUrl() {
             return url;
