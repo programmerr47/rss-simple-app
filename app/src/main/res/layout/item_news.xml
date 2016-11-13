@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/image"
@@ -14,29 +14,31 @@
         android:src="@drawable/news_placeholder"
         android:scaleType="centerCrop"/>
 
-    <!-- android:layout_marginTop="-4dp" is a hack to reduce top extra spacing of textview -->
-    <!-- TODO need to try roboto font -->
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-4dp"
-        android:layout_toRightOf="@id/image"
-        android:layout_toEndOf="@id/image"
-        android:textColor="#000"
-        android:textSize="17sp"
-        android:text="Test title of news"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/source"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/title"
-        android:layout_margin="@dimen/margin_medium"
-        android:textColor="#ccc"
-        android:textSize="12sp"
-        android:text="@string/source.lenta"/>
+        <!-- android:layout_marginTop="-4dp" is a hack to reduce top extra spacing of textview -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-4dp"
+            android:textColor="#000"
+            android:textSize="17sp"
+            android:text="Test title of news"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="@dimen/margin_medium"
+            android:textColor="#ccc"
+            android:textSize="12sp"
+            android:text="@string/source.lenta"/>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -17,15 +17,9 @@ public final class UrlRequest<R> {
     }
 
     public Observable<R> makeObservable(final String url) {
-        return Observable.fromCallable(new Callable<R>() {
-            @Override
-            public R call() throws Exception {
-                InputStream urlStream = new URL(url).openStream();
-                try {
-                    return new Persister().read(responseClass, urlStream);
-                } finally {
-                    urlStream.close();
-                }
+        return Observable.fromCallable(() -> {
+            try (InputStream urlStream = new URL(url).openStream()) {
+                return new Persister().read(responseClass, urlStream);
             }
         });
     }
