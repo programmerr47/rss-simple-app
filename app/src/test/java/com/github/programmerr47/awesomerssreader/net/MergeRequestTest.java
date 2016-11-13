@@ -10,7 +10,6 @@ import org.junit.Test;
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaObservable;
@@ -20,10 +19,6 @@ import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaItem;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-12
- */
 public class MergeRequestTest {
     @Test
     public void simpleMergingTwoRss() {
@@ -48,11 +43,11 @@ public class MergeRequestTest {
     }
 
     private boolean checkAppNewsItem(AppNewsItem item, String title, String description, Source source, long date, String thumbUrl) {
-        return equals(item.getTitle(), title) &&
-                equals(item.getDescription(), description) &&
-                equals(item.getSource(), source) &&
-                equals(item.getDate(), date) &&
-                equals(item.getThumbUrl(), thumbUrl);
+        return equals(item.title(), title) &&
+                equals(item.description(), description) &&
+                equals(item.source(), source) &&
+                equals(item.date(), date) &&
+                equals(item.thumbUrl(), thumbUrl);
     }
 
     private boolean equals(Object left, Object right) {

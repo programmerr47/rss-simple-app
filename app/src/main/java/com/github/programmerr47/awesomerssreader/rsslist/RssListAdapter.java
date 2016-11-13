@@ -12,16 +12,22 @@ import android.widget.TextView;
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source;
+import com.github.programmerr47.awesomerssreader.util.AndroidUtils;
 import com.github.programmerr47.awesomerssreader.util.BindRecyclerHolder;
 import com.squareup.picasso.RequestCreator;
 
 import java.util.Collections;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.experimental.ExtensionMethod;
+import lombok.experimental.FieldDefaults;
+
 import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CirclePlaceholder.circlePlaceholder;
 import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTransformation.circleTransformation;
 import static com.github.programmerr47.awesomerssreader.util.picasso.PicassoUtil.picasso;
+import static lombok.AccessLevel.PRIVATE;
 
 @SuppressWarnings("WeakerAccess")
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
@@ -38,10 +44,10 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
         AppNewsItem item = lentaNews.get(position);
 
         RequestCreator requestCreator;
-        if (item.getThumbUrl() != null) {
+        if (item.thumbUrl() != null) {
             Drawable circleNewsPlaceholder = circlePlaceholder().get(holder.itemView.getContext(), R.drawable.news_placeholder);
             requestCreator = picasso()
-                    .load(item.getThumbUrl())
+                    .load(item.thumbUrl())
                     .placeholder(circleNewsPlaceholder)
                     .error(circleNewsPlaceholder);
         } else {
@@ -54,8 +60,8 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
                 .centerCrop()
                 .into(holder.image);
 
-        holder.title.setText(item.getTitle());
-        holder.setSource(item.getSource());
+        holder.title.setText(item.title());
+        holder.setSource(item.source());
     }
 
     @Override
@@ -69,10 +75,11 @@ public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemH
         notifyDataSetChanged();
     }
 
+    @FieldDefaults(level = PRIVATE, makeFinal = true)
     static final class RssItemHolder extends BindRecyclerHolder {
-        private final ImageView image = bind(R.id.image);
-        private final TextView title = bind(R.id.title);
-        private final TextView source = bind(R.id.source);
+        ImageView image = bind(R.id.image);
+        TextView title = bind(R.id.title);
+        TextView source = bind(R.id.source);
 
         public RssItemHolder(View itemView) {
             super(itemView);

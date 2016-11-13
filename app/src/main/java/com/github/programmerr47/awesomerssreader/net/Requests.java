@@ -7,6 +7,7 @@ import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 import java.util.List;
 
 import io.reactivex.Observable;
+import lombok.val;
 
 public class Requests {
     private Requests() {
@@ -28,17 +29,17 @@ public class Requests {
 
     @SuppressWarnings("WeakerAccess")
     public static Observable<List<AppNewsItem>> toAppNewsObservable(Observable<LentaRss> lentaRssObservable, Observable<GazetaRss> gazetaRssObservable) {
-        Observable<AppNewsItem> fromLentaRss = lentaRssObservable
-                .map(LentaRss::getItems)
+        val fromLentaRss = lentaRssObservable
+                .map(LentaRss::items)
                 .flatMap(Observable::fromIterable)
                 .map(AppNewsItem::create);
-        Observable<AppNewsItem> fromGazetaRss = gazetaRssObservable
-                .map(GazetaRss::getItems)
+        val fromGazetaRss = gazetaRssObservable
+                .map(GazetaRss::items)
                 .flatMap(Observable::fromIterable)
                 .map(AppNewsItem::create);
 
         return Observable.merge(fromLentaRss, fromGazetaRss)
-                .toSortedList((item1, item2) -> Long.valueOf(item2.getDate()).compareTo(item1.getDate()))
+                .toSortedList((item1, item2) -> Long.valueOf(item2.date()).compareTo(item1.date()))
                 .toObservable();
     }
 }

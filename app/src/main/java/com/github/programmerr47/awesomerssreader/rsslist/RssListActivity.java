@@ -21,7 +21,6 @@ import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
 import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
 import static io.reactivex.schedulers.Schedulers.io;
 
-//TODO add progress bar
 public class RssListActivity extends BindActivity {
     private final RssListAdapter adapter = new RssListAdapter();
     private RecyclerView listView;
