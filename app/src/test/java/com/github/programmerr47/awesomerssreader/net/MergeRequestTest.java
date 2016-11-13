@@ -2,10 +2,12 @@ package com.github.programmerr47.awesomerssreader.net;
 
 import com.github.programmerr47.awesomerssreader.ObjectFactory;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
+import com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source;
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
+import com.github.programmerr47.awesomerssreader.util.DateFormatter;
 
 import org.junit.Test;
 
@@ -13,12 +15,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.functions.Predicate;
 import io.reactivex.subscribers.TestSubscriber;
 
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaFlowable;
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaItem;
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaFlowable;
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaItem;
+import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
+import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
 import static java.util.Arrays.asList;
 
 /**
@@ -41,5 +46,28 @@ public class MergeRequestTest {
         TestSubscriber<List<AppNewsItem>> testSubscriber = new TestSubscriber<>();
         mergeResult.subscribe(testSubscriber);
         testSubscriber.assertNoErrors();
+        testSubscriber.assertValue(new Predicate<List<AppNewsItem>>() {
+            @Override
+            public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
+                return appNewsItems.size() == 4 &&
+                        checkAppNewsItem(appNewsItems.get(0), "Lenta Test1", "Test description lenta 1", LENTA, 1478938862000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(1), "Gazeta Test1", "Test description gazeta 1", GAZETA, 1478942462000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(2), "Lenta Test2", "Test description lenta 2", LENTA, 1478946062000L, null) &&
+                        checkAppNewsItem(appNewsItems.get(3), "Gazeta Test2", "Test description gazeta 2", GAZETA, 1478949662000L, null);
+            }
+        });
+    }
+
+    private boolean checkAppNewsItem(AppNewsItem item, String title, String description, Source source, long date, String thumbUrl) {
+        return equals(item.getTitle(), title) &&
+                equals(item.getDescription(), description) &&
+                equals(item.getSource(), source) &&
+                equals(item.getDate(), date) &&
+                equals(item.getThumbUrl(), thumbUrl);
+    }
+
+    private boolean equals(Object left, Object right) {
+        return left == null && right == null ||
+                left != null && right != null && left.equals(right);
     }
 }
