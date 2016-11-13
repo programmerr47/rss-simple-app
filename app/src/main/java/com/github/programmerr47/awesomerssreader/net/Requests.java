@@ -6,40 +6,42 @@ import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 
-import org.reactivestreams.Publisher;
-
 import java.util.Comparator;
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.functions.Function;
 
 public class Requests {
-    private Requests() {}
-
-    public static Flowable<List<AppNewsItem>> fetchAllRss() {
-        return toAppNewsFlowable(fetchLentaRss(), fetchGazetaRss());
+    private Requests() {
     }
 
-    public static Flowable<LentaRss> fetchLentaRss() {
-        return new UrlRequest<>(LentaRss.class).makeFlowable("https://m.lenta.ru/rss");
+    public static Observable<List<AppNewsItem>> fetchAllRss() {
+        return toAppNewsObservable(fetchLentaRss(), fetchGazetaRss());
     }
 
-    public static Flowable<GazetaRss> fetchGazetaRss() {
-        return new UrlRequest<>(GazetaRss.class).makeFlowable("https://m.gazeta.ru/export/rss/lenta.xml");
+    @SuppressWarnings("WeakerAccess")
+    public static Observable<LentaRss> fetchLentaRss() {
+        return new UrlRequest<>(LentaRss.class).makeObservable("https://m.lenta.ru/rss");
     }
 
-    public static Flowable<List<AppNewsItem>> toAppNewsFlowable(Flowable<LentaRss> lentaRssFlowable, Flowable<GazetaRss> gazetaRssFlowable) {
-        Flowable<AppNewsItem> fromLentaRss = lentaRssFlowable.map(new Function<LentaRss, List<LentaNewsItem>>() {
+    @SuppressWarnings("WeakerAccess")
+    public static Observable<GazetaRss> fetchGazetaRss() {
+        return new UrlRequest<>(GazetaRss.class).makeObservable("https://m.gazeta.ru/export/rss/lenta.xml");
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public static Observable<List<AppNewsItem>> toAppNewsObservable(Observable<LentaRss> lentaRssObservable, Observable<GazetaRss> gazetaRssObservable) {
+        Observable<AppNewsItem> fromLentaRss = lentaRssObservable.map(new Function<LentaRss, List<LentaNewsItem>>() {
             @Override
             public List<LentaNewsItem> apply(LentaRss lentaRss) throws Exception {
                 return lentaRss.getItems();
             }
-        }).flatMap(new Function<List<LentaNewsItem>, Publisher<LentaNewsItem>>() {
+        }).flatMap(new Function<List<LentaNewsItem>, ObservableSource<LentaNewsItem>>() {
             @Override
-            public Publisher<LentaNewsItem> apply(List<LentaNewsItem> lentaNewsItems) throws Exception {
-                return Flowable.fromIterable(lentaNewsItems);
+            public ObservableSource<LentaNewsItem> apply(List<LentaNewsItem> lentaNewsItems) throws Exception {
+                return Observable.fromIterable(lentaNewsItems);
             }
         }).map(new Function<LentaNewsItem, AppNewsItem>() {
             @Override
@@ -48,15 +50,15 @@ public class Requests {
             }
         });
 
-        Flowable<AppNewsItem> fromGazetaRss = gazetaRssFlowable.map(new Function<GazetaRss, List<GazetaNewsItem>>() {
+        Observable<AppNewsItem> fromGazetaRss = gazetaRssObservable.map(new Function<GazetaRss, List<GazetaNewsItem>>() {
             @Override
             public List<GazetaNewsItem> apply(GazetaRss gazetaRss) throws Exception {
                 return gazetaRss.getItems();
             }
-        }).flatMap(new Function<List<GazetaNewsItem>, Publisher<GazetaNewsItem>>() {
+        }).flatMap(new Function<List<GazetaNewsItem>, ObservableSource<GazetaNewsItem>>() {
             @Override
-            public Publisher<GazetaNewsItem> apply(List<GazetaNewsItem> items) throws Exception {
-                return Flowable.fromIterable(items);
+            public ObservableSource<GazetaNewsItem> apply(List<GazetaNewsItem> items) throws Exception {
+                return Observable.fromIterable(items);
             }
         }).map(new Function<GazetaNewsItem, AppNewsItem>() {
             @Override
@@ -65,7 +67,7 @@ public class Requests {
             }
         });
 
-        return Flowable.merge(fromLentaRss, fromGazetaRss)
+        return Observable.merge(fromLentaRss, fromGazetaRss)
                 .toSortedList(new Comparator<AppNewsItem>() {
                     @Override
                     public int compare(AppNewsItem item1, AppNewsItem item2) {
@@ -73,6 +75,6 @@ public class Requests {
                         return diff < 0 ? -1 : diff == 0 ? 0 : 1;
                     }
                 })
-                .toFlowable();
+                .toObservable();
     }
 }

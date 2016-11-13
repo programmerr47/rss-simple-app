@@ -4,6 +4,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 
+@SuppressWarnings("WeakerAccess")
 public class ViewUtils {
     private ViewUtils() {}
 

@@ -2,9 +2,6 @@ package com.github.programmerr47.awesomerssreader.model;
 
 import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
-import com.github.programmerr47.awesomerssreader.util.DateFormatter;
-
-import java.util.Date;
 
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
@@ -69,6 +66,7 @@ public final class AppNewsItem {
         return thumbUrl;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static final class Builder {
         private String title;
         private String description;

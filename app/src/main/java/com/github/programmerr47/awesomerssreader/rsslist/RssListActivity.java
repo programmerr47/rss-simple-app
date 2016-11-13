@@ -10,15 +10,14 @@ import android.widget.ProgressBar;
 
 import com.github.programmerr47.awesomerssreader.R;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
-import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 import com.github.programmerr47.awesomerssreader.net.Requests;
-import com.github.programmerr47.awesomerssreader.net.UrlRequest;
 import com.github.programmerr47.awesomerssreader.util.BindActivity;
 import com.github.programmerr47.awesomerssreader.util.recyclerdecorations.SpaceDecoration;
 
 import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
@@ -73,13 +72,19 @@ public class RssListActivity extends BindActivity {
                     @Override
                     public void accept(List<AppNewsItem> appNewsItems) throws Exception {
                         adapter.updateItems(appNewsItems);
-                        listView.setVisibility(VISIBLE);
-                        progressView.setVisibility(GONE);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         showErrorSnackbar();
+                        listView.setVisibility(VISIBLE);
+                        progressView.setVisibility(GONE);
+                    }
+                }, new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        listView.setVisibility(VISIBLE);
+                        progressView.setVisibility(GONE);
                     }
                 }));
     }

@@ -5,7 +5,7 @@ import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 import static java.util.Arrays.asList;
 
@@ -14,20 +14,23 @@ import static java.util.Arrays.asList;
  * @since 2016-11-12
  */
 public class ObjectFactory {
-    private ObjectFactory() {}
-
-    public static Flowable<LentaRss> lentaFlowable(LentaNewsItem... lentaNewsItems) {
-        return Flowable.fromArray(lentaRss(lentaNewsItems));
+    private ObjectFactory() {
     }
 
-    public static Flowable<GazetaRss> gazetaFlowable(GazetaNewsItem... gazetaNewsItems) {
-        return Flowable.fromArray(gazetaRss(gazetaNewsItems));
+    public static Observable<LentaRss> lentaObservable(LentaNewsItem... lentaNewsItems) {
+        return Observable.just(lentaRss(lentaNewsItems));
     }
 
+    public static Observable<GazetaRss> gazetaObservable(GazetaNewsItem... gazetaNewsItems) {
+        return Observable.just(gazetaRss(gazetaNewsItems));
+    }
+
+    @SuppressWarnings("WeakerAccess")
     public static LentaRss lentaRss(LentaNewsItem... lentaNewsItems) {
         return new LentaRss(asList(lentaNewsItems));
     }
 
+    @SuppressWarnings("WeakerAccess")
     public static GazetaRss gazetaRss(GazetaNewsItem... gazetaNewsItems) {
         return new GazetaRss(asList(gazetaNewsItems));
     }

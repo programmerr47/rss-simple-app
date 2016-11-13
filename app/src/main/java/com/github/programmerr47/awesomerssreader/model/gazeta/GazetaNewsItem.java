@@ -1,20 +1,25 @@
 package com.github.programmerr47.awesomerssreader.model.gazeta;
 
-import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
-
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 @Root(name = "item")
 public final class GazetaNewsItem {
-    @Element private String title;
-    @Element private String link;
-    @Element private String author;
-    @Element private String pubDate;
-    @Element private String description;
-    @Element private String guid;
-    @Element(required = false) private Enclosure enclosure;
+    @Element
+    private String title;
+    @Element
+    private String link;
+    @Element
+    private String author;
+    @Element
+    private String pubDate;
+    @Element
+    private String description;
+    @Element
+    private String guid;
+    @Element(required = false)
+    private Enclosure enclosure;
 
     public GazetaNewsItem(String title, String link, String author, String pubDate, String description, String guid, String thumbUrl) {
         this.title = title;
@@ -22,11 +27,12 @@ public final class GazetaNewsItem {
         this.author = author;
         this.pubDate = pubDate;
         this.description = description;
-        this.guid= guid;
+        this.guid = guid;
         this.enclosure = new Enclosure(thumbUrl, null);
     }
 
-    public GazetaNewsItem() {}
+    public GazetaNewsItem() {
+    }
 
     public String getTitle() {
         return title;
@@ -58,15 +64,18 @@ public final class GazetaNewsItem {
 
     @Root(name = "enclosure")
     public static final class Enclosure {
-        @Attribute private String url;
-        @Attribute private String type;
+        @Attribute
+        private String url;
+        @Attribute
+        private String type;
 
         public Enclosure(String url, String type) {
             this.url = url;
             this.type = type;
         }
 
-        public Enclosure() {}
+        public Enclosure() {
+        }
 
         public String getUrl() {
             return url;

@@ -14,7 +14,6 @@ import java.util.Collection;
 
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaItem;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
-import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
 
 /**
  * @author Michael Spitsin

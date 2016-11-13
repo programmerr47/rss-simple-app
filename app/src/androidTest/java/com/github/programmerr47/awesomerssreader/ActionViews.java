@@ -18,6 +18,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
  * @author Michael Spitsin
  * @since 2016-11-08
  */
+@SuppressWarnings("WeakerAccess")
 public class ActionViews {
     private ActionViews() {}
 

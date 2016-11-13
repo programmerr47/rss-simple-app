@@ -11,16 +11,16 @@ import org.junit.Test;
 import java.util.List;
 
 import io.reactivex.functions.Predicate;
-import io.reactivex.subscribers.TestSubscriber;
+import io.reactivex.observers.TestObserver;
 
 public class RssCheckTest {
     @Test
     @LargeTest
     public void checkLentaOnlineRss() throws Exception {
-        TestSubscriber<LentaRss> testSubscriber = new TestSubscriber<>();
-        Requests.fetchLentaRss().subscribe(testSubscriber);
+        TestObserver<LentaRss> testObserver = new TestObserver<>();
+        Requests.fetchLentaRss().subscribe(testObserver);
 
-        testSubscriber.assertNoErrors().assertValue(new Predicate<LentaRss>() {
+        testObserver.assertNoErrors().assertValue(new Predicate<LentaRss>() {
             @Override
             public boolean test(LentaRss lentaRss) throws Exception {
                 return lentaRss != null;
@@ -41,10 +41,10 @@ public class RssCheckTest {
     @Test
     @LargeTest
     public void checkGazetaOnlineRss() throws Exception {
-        TestSubscriber<GazetaRss> testSubscriber = new TestSubscriber<>();
-        Requests.fetchGazetaRss().subscribe(testSubscriber);
+        TestObserver<GazetaRss> testObserver = new TestObserver<>();
+        Requests.fetchGazetaRss().subscribe(testObserver);
 
-        testSubscriber.assertNoErrors().assertValue(new Predicate<GazetaRss>() {
+        testObserver.assertNoErrors().assertValue(new Predicate<GazetaRss>() {
             @Override
             public boolean test(GazetaRss gazetaRss) throws Exception {
                 return gazetaRss != null;
@@ -65,9 +65,9 @@ public class RssCheckTest {
     @Test
     @LargeTest
     public void checkAllOnlineRss() throws Exception {
-        TestSubscriber<List<AppNewsItem>> testSubscriber = new TestSubscriber<>();
-        Requests.fetchAllRss().subscribe(testSubscriber);
-        testSubscriber.assertNoErrors().assertValue(new Predicate<List<AppNewsItem>>() {
+        TestObserver<List<AppNewsItem>> testObserver = new TestObserver<>();
+        Requests.fetchAllRss().subscribe(testObserver);
+        testObserver.assertNoErrors().assertValue(new Predicate<List<AppNewsItem>>() {
             @Override
             public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
                 return appNewsItems != null;
