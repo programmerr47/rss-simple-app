@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
 public class RssCheckTest {
@@ -20,22 +19,10 @@ public class RssCheckTest {
         TestObserver<LentaRss> testObserver = new TestObserver<>();
         Requests.fetchLentaRss().subscribe(testObserver);
 
-        testObserver.assertNoErrors().assertValue(new Predicate<LentaRss>() {
-            @Override
-            public boolean test(LentaRss lentaRss) throws Exception {
-                return lentaRss != null;
-            }
-        }).assertValue(new Predicate<LentaRss>() {
-            @Override
-            public boolean test(LentaRss lentaRss) throws Exception {
-                return lentaRss.getItems().size() > 0;
-            }
-        }).assertValue(new Predicate<LentaRss>() {
-            @Override
-            public boolean test(LentaRss lentaRss) throws Exception {
-                return isContentNotNull(lentaRss.getItems());
-            }
-        });
+        testObserver.assertNoErrors()
+                .assertValue(lentaRss -> lentaRss != null)
+                .assertValue(lentaRss -> lentaRss.getItems().size() > 0)
+                .assertValue(lentaRss -> isContentNotNull(lentaRss.getItems()));
     }
 
     @Test
@@ -44,22 +31,10 @@ public class RssCheckTest {
         TestObserver<GazetaRss> testObserver = new TestObserver<>();
         Requests.fetchGazetaRss().subscribe(testObserver);
 
-        testObserver.assertNoErrors().assertValue(new Predicate<GazetaRss>() {
-            @Override
-            public boolean test(GazetaRss gazetaRss) throws Exception {
-                return gazetaRss != null;
-            }
-        }).assertValue(new Predicate<GazetaRss>() {
-            @Override
-            public boolean test(GazetaRss gazetaRss) throws Exception {
-                return gazetaRss.getItems().size() > 0;
-            }
-        }).assertValue(new Predicate<GazetaRss>() {
-            @Override
-            public boolean test(GazetaRss gazetaRss) throws Exception {
-                return isContentNotNull(gazetaRss.getItems());
-            }
-        });
+        testObserver.assertNoErrors()
+                .assertValue(gazetaRss -> gazetaRss != null)
+                .assertValue(gazetaRss -> gazetaRss.getItems().size() > 0)
+                .assertValue(gazetaRss -> isContentNotNull(gazetaRss.getItems()));
     }
 
     @Test
@@ -67,22 +42,10 @@ public class RssCheckTest {
     public void checkAllOnlineRss() throws Exception {
         TestObserver<List<AppNewsItem>> testObserver = new TestObserver<>();
         Requests.fetchAllRss().subscribe(testObserver);
-        testObserver.assertNoErrors().assertValue(new Predicate<List<AppNewsItem>>() {
-            @Override
-            public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
-                return appNewsItems != null;
-            }
-        }).assertValue(new Predicate<List<AppNewsItem>>() {
-            @Override
-            public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
-                return appNewsItems.size() > 0;
-            }
-        }).assertValue(new Predicate<List<AppNewsItem>>() {
-            @Override
-            public boolean test(List<AppNewsItem> appNewsItems) throws Exception {
-                return isContentNotNull(appNewsItems);
-            }
-        });
+        testObserver.assertNoErrors()
+                .assertValue(appNewsItems -> appNewsItems != null)
+                .assertValue(appNewsItems -> appNewsItems.size() > 0)
+                .assertValue(this::isContentNotNull);
     }
 
     private boolean isContentNotNull(Iterable<?> iterable) {

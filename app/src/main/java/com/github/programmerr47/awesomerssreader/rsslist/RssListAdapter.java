@@ -23,6 +23,7 @@ import static com.github.programmerr47.awesomerssreader.util.picasso.CirclePlace
 import static com.github.programmerr47.awesomerssreader.util.picasso.CircleTransformation.circleTransformation;
 import static com.github.programmerr47.awesomerssreader.util.picasso.PicassoUtil.picasso;
 
+@SuppressWarnings("WeakerAccess")
 public class RssListAdapter extends RecyclerView.Adapter<RssListAdapter.RssItemHolder> {
     private List<AppNewsItem> lentaNews = Collections.emptyList();
 
