@@ -4,10 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-07
- */
 public class RssApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context appContext;

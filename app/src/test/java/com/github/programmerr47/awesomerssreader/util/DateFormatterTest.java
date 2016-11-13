@@ -3,10 +3,6 @@ package com.github.programmerr47.awesomerssreader.util;
 import org.junit.Assert;
 import org.junit.Test;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-12
- */
 public class DateFormatterTest {
     @Test
     public void rssDateStrToMsSmockTest() {

@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
     android:orientation="horizontal">
 
     <ImageView
@@ -17,6 +18,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
         android:orientation="vertical">
 
         <!-- android:layout_marginTop="-4dp" is a hack to reduce top extra spacing of textview -->
@@ -25,17 +27,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="-4dp"
-            android:textColor="#000"
+            android:textColor="@color/textPrimary"
             android:textSize="17sp"
             android:text="Test title of news"/>
+
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:textColor="@color/textSecondary"
+            android:textSize="15sp"
+            android:text="Test description to see how it will fill preview device"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/source"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:layout_margin="@dimen/margin_medium"
-            android:textColor="#ccc"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:textColor="@color/textHint"
             android:textSize="12sp"
             android:text="@string/source.lenta"/>
 

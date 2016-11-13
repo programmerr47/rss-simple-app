@@ -6,17 +6,12 @@ import com.github.programmerr47.awesomerssreader.model.lenta.LentaNewsItem;
 import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 
 import io.reactivex.Observable;
+import lombok.experimental.UtilityClass;
 
 import static java.util.Arrays.asList;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-12
- */
+@UtilityClass
 public class ObjectFactory {
-    private ObjectFactory() {
-    }
-
     public static Observable<LentaRss> lentaObservable(LentaNewsItem... lentaNewsItems) {
         return Observable.just(lentaRss(lentaNewsItems));
     }

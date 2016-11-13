@@ -4,10 +4,6 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * @author Michael Spitsin
- * @since 2016-11-09
- */
 public class SpaceDecoration extends RecyclerView.ItemDecoration {
     private final int spaceBetween;
 

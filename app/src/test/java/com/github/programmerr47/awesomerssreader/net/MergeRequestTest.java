@@ -2,36 +2,34 @@ package com.github.programmerr47.awesomerssreader.net;
 
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem;
 import com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source;
-import com.github.programmerr47.awesomerssreader.model.gazeta.GazetaRss;
-import com.github.programmerr47.awesomerssreader.model.lenta.LentaRss;
 
 import org.junit.Test;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;
+import lombok.val;
 
-import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaObservable;
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaItem;
-import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaObservable;
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.gazetaObservable;
 import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaItem;
+import static com.github.programmerr47.awesomerssreader.ObjectFactory.lentaObservable;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.GAZETA;
 import static com.github.programmerr47.awesomerssreader.model.AppNewsItem.Source.LENTA;
 
 public class MergeRequestTest {
     @Test
     public void simpleMergingTwoRss() {
-        Observable<LentaRss> lentaObservable = lentaObservable(
+        val lentaObservable = lentaObservable(
                 lentaItem("Lenta Test1", "Test description lenta 1", "Sat, 12 Nov 2016 11:21:02 +0300", null),
                 lentaItem("Lenta Test2", "Test description lenta 2", "Sat, 12 Nov 2016 13:21:02 +0300", null));
 
-        Observable<GazetaRss> gazetaObservable = gazetaObservable(
+        val gazetaObservable = gazetaObservable(
                 gazetaItem("Gazeta Test1", "Sat, 12 Nov 2016 12:21:02 +0300", "Test description gazeta 1", null),
                 gazetaItem("Gazeta Test2", "Sat, 12 Nov 2016 14:21:02 +0300", "Test description gazeta 2", null));
 
-        Observable<List<AppNewsItem>> mergeResult = Requests.toAppNewsObservable(lentaObservable, gazetaObservable);
-        TestObserver<List<AppNewsItem>> testObserver = new TestObserver<>();
+        val mergeResult = Requests.toAppNewsObservable(lentaObservable, gazetaObservable);
+        val testObserver = new TestObserver<List<AppNewsItem>>();
         mergeResult.subscribe(testObserver);
         testObserver
                 .assertNoErrors()

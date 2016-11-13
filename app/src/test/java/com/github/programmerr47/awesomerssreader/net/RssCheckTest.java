@@ -11,12 +11,13 @@ import org.junit.Test;
 import java.util.List;
 
 import io.reactivex.observers.TestObserver;
+import lombok.val;
 
 public class RssCheckTest {
     @Test
     @LargeTest
     public void checkLentaOnlineRss() throws Exception {
-        TestObserver<LentaRss> testObserver = new TestObserver<>();
+        val testObserver = new TestObserver<LentaRss>();
         Requests.fetchLentaRss().subscribe(testObserver);
 
         testObserver.assertNoErrors()
@@ -28,7 +29,7 @@ public class RssCheckTest {
     @Test
     @LargeTest
     public void checkGazetaOnlineRss() throws Exception {
-        TestObserver<GazetaRss> testObserver = new TestObserver<>();
+        val testObserver = new TestObserver<GazetaRss>();
         Requests.fetchGazetaRss().subscribe(testObserver);
 
         testObserver.assertNoErrors()
@@ -40,7 +41,7 @@ public class RssCheckTest {
     @Test
     @LargeTest
     public void checkAllOnlineRss() throws Exception {
-        TestObserver<List<AppNewsItem>> testObserver = new TestObserver<>();
+        val testObserver = new TestObserver<List<AppNewsItem>>();
         Requests.fetchAllRss().subscribe(testObserver);
         testObserver.assertNoErrors()
                 .assertValue(appNewsItems -> appNewsItems != null)
