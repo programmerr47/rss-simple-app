@@ -8,26 +8,23 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 
 import com.github.programmerr47.awesomerssreader.R;
-import com.github.programmerr47.awesomerssreader.net.Requests;
+import com.github.programmerr47.awesomerssreader.RssApplication;
 import com.github.programmerr47.awesomerssreader.util.BindActivity;
 import com.github.programmerr47.awesomerssreader.util.recyclerdecorations.SpaceDecoration;
 
-import io.reactivex.disposables.Disposable;
+import java.util.List;
 
 import static android.support.design.widget.Snackbar.LENGTH_INDEFINITE;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.github.programmerr47.awesomerssreader.util.AndroidUtils.dimen;
-import static com.github.programmerr47.awesomerssreader.util.ObservableTransformers.listMap;
-import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
-import static io.reactivex.schedulers.Schedulers.io;
 
-public class RssListActivity extends BindActivity {
+public class RssListActivity extends BindActivity implements RssListView {
     private final RssListAdapter adapter = new RssListAdapter();
     private RecyclerView listView;
     private ProgressBar progressView;
 
-    private Disposable currentDisposable;
+    private BaseRssPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +32,9 @@ public class RssListActivity extends BindActivity {
         setContentView(R.layout.page_rss_list);
         progressView = bind(R.id.progress);
         prepareRecycler();
+
+        presenter = RssApplication.application(this).rssPresenter();
+        presenter.onCreate(this);
     }
 
     private void prepareRecycler() {
@@ -49,43 +49,33 @@ public class RssListActivity extends BindActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        fetchRss();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        updateCurrentDisposable(null);
+        presenter.onDestroy();
     }
 
-    private void fetchRss() {
-        updateCurrentDisposable(Requests.fetchAllRss()
-                .compose(listMap(AppNewsAdapterItem::create))
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .subscribe(
-                        adapter::updateItems,
-                        throwable -> {
-                            showErrorSnackbar();
-                            progressView.setVisibility(GONE);
-                        },
-                        () -> {
-                            listView.setVisibility(VISIBLE);
-                            progressView.setVisibility(GONE);
-                        }));
+    @Override
+    public void showList(List<AppNewsAdapterItem> items) {
+        adapter.updateItems(items);
     }
 
-    private void showErrorSnackbar() {
+    @Override
+    public void showProgress() {
+        progressView.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressView.setVisibility(GONE);
+    }
+
+    @Override
+    public void showError() {
         Snackbar.make(listView, R.string.message_error, LENGTH_INDEFINITE)
-                .setAction(R.string.action_retry, view -> fetchRss())
+                .setAction(R.string.action_retry, view -> presenter.fetchRss())
                 .show();
-    }
-
-    private void updateCurrentDisposable(Disposable newDisposable) {
-        if (currentDisposable != null && !currentDisposable.isDisposed()) {
-            currentDisposable.dispose();
-        }
-
-        currentDisposable = newDisposable;
     }
 }
