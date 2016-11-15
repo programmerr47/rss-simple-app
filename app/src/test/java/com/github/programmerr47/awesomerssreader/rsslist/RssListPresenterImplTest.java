@@ -1,15 +1,11 @@
 package com.github.programmerr47.awesomerssreader.rsslist;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import io.reactivex.Observer;
 import lombok.val;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -20,7 +16,8 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RssListPresenterImplTest {
-    @Mock private RssListView rssListView;
+    @Mock
+    private RssListView rssListView;
 
     @Test
     public void fetchingInOnCreate() {
