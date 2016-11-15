@@ -13,7 +13,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.github.programmerr47.awesomerssreader.AppMockRunner"
     }
     buildTypes {
         release {

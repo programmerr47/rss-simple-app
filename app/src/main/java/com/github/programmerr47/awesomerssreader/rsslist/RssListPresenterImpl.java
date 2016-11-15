@@ -1,17 +1,21 @@
 package com.github.programmerr47.awesomerssreader.rsslist;
 
-import com.github.programmerr47.awesomerssreader.net.Requests;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.functions.Functions;
+import io.reactivex.internal.observers.LambdaObserver;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import lombok.val;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
-import static com.github.programmerr47.awesomerssreader.util.ObservableTransformers.listMap;
-import static io.reactivex.android.schedulers.AndroidSchedulers.mainThread;
-import static io.reactivex.schedulers.Schedulers.io;
+import static lombok.AccessLevel.PRIVATE;
 
+@FieldDefaults(level = PRIVATE)
+@RequiredArgsConstructor
 public final class RssListPresenterImpl extends BaseRssPresenter {
-    private Disposable currentDisposable;
+    final Interactor interactor;
+    Disposable currentDisposable;
 
     @Override
     public void onCreate(RssListView view) {
@@ -27,17 +31,17 @@ public final class RssListPresenterImpl extends BaseRssPresenter {
 
     @Override
     public void fetchRss() {
-        updateCurrentDisposable(Requests.fetchAllRss()
-                .compose(listMap(AppNewsAdapterItem::create))
-                .subscribeOn(io())
-                .observeOn(mainThread())
-                .subscribe(
-                        view::showList,
-                        throwable -> {
-                            view.showError();
-                            view.hideProgress();
-                        },
-                        view::hideProgress));
+        view.showProgress();
+        val observer = new LambdaObserver<List<AppNewsAdapterItem>>(
+                view::showList,
+                throwable -> {
+                    view.showError();
+                    view.hideProgress();
+                },
+                view::hideProgress,
+                Functions.emptyConsumer());
+        updateCurrentDisposable(observer);
+        interactor.interact(observer);
     }
 
     private void updateCurrentDisposable(Disposable newDisposable) {

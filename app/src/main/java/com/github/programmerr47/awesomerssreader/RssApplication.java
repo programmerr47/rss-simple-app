@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.github.programmerr47.awesomerssreader.rsslist.BaseRssPresenter;
+import com.github.programmerr47.awesomerssreader.rsslist.FetchAllRssInteractor;
+import com.github.programmerr47.awesomerssreader.rsslist.Interactor;
 import com.github.programmerr47.awesomerssreader.rsslist.RssListPresenterImpl;
 
 public class RssApplication extends Application {
@@ -18,7 +20,7 @@ public class RssApplication extends Application {
     }
 
     public BaseRssPresenter rssPresenter() {
-        return new RssListPresenterImpl();
+        return new RssListPresenterImpl(new FetchAllRssInteractor());
     }
 
     public static Context appContext() {
